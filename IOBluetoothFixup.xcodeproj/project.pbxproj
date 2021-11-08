@@ -110,7 +110,6 @@
 		BCC6F3322738372B00E62FDF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					BCC6F33A2738372B00E62FDF = {
@@ -119,7 +118,7 @@
 				};
 			};
 			buildConfigurationList = BCC6F3352738372B00E62FDF /* Build configuration list for PBXProject "IOBluetoothFixup" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
