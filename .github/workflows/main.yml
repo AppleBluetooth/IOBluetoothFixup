@@ -9,15 +9,11 @@ env:
   DEBUG_BUILD_OUTPUT: 'build/Build/Products/Debug'
 
 jobs:
-
   build:
-    
     runs-on: macos-latest
-
     steps:
-
     - uses: actions/checkout@v2
-
+    
     - name: Manage Version
       run: |
         git fetch --prune --unshallow --tags
@@ -31,12 +27,15 @@ jobs:
         else
           echo "OLD_PRE_TAG=$CUR_TAG" >> $GITHUB_ENV
         fi
+        
     - name: Install MacKernelSDK
       run: |
         git clone --depth=1 https://github.com/CharlieJiangXXX/MacKernelSDK.git
+        
     - name: Install Lilu
       run: |
         git clone --depth=1 https://github.com/acidanthera/Lilu.git
+        
     - name: Build Release
       run: |
         xcodebuild -scheme IOBluetoothFixup -configuration Release -derivedDataPath build GIT_COMMIT=_${SHORT_SHA} | xcpretty && exit ${PIPESTATUS[0]}
@@ -44,6 +43,7 @@ jobs:
     - name: Build Debug
       run: |
         xcodebuild -scheme IOBluetoothFixup -configuration Debug -derivedDataPath build GIT_COMMIT=_${SHORT_SHA} | xcpretty && exit ${PIPESTATUS[0]}
+    
     - name: Pack Release Artifacts
       run: |
         cd $RELEASE_BUILD_OUTPUT
@@ -53,6 +53,7 @@ jobs:
       run: |
         cd $DEBUG_BUILD_OUTPUT
         zip -r IOBluetoothFixup-${MODULE_VER}-DEBUG-alpha-${SHORT_SHA}.zip *.kext
+        
     - name: Delete Old Prerelease
       uses: dev-drprasad/delete-tag-and-release@v0.2.0
       with:
