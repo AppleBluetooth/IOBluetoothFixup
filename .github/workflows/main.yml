@@ -37,7 +37,6 @@ jobs:
         LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/acidanthera/Lilu/releases/latest)
         LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
         ARTIFACT_NAME="Lilu-$LATEST_VERSION-DEBUG.zip"
-        cd $PROJECT_DIR
         curl -LfsO "https://github.com/acidanthera/Lilu/releases/download/$LATEST_VERSION/$ARTIFACT_NAME"
         unzip $ARTIFACT_NAME
         rm $ARTIFACT_NAME
