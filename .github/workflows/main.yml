@@ -32,9 +32,9 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/CharlieJiangXXX/MacKernelSDK.git
         
-    - name: Install Lilu
+    - name: Lilu Bootstrap
       run: |
-        git clone --depth=1 https://github.com/acidanthera/Lilu.git
+        src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/Lilu/master/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
         
     - name: Build Release
       run: |
