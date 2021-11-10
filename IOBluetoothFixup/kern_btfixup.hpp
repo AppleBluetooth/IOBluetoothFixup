@@ -36,6 +36,7 @@ static KernelPatcher::KextInfo kextList[] {
 };
 
 static const char * createBluetoothHostControllerObjectSymbol { "__ZN24IOBluetoothHCIController35CreateBluetoothHostControllerObjectEP25BluetoothHardwareListType" }; //10.15-11.6
+static const char * needToWaitForControllerToShowUpSymbol { "__ZN24IOBluetoothHCIController31NeedToWaitForControllerToShowUpEv" }; //11.0-11.6
 
 class IOBluetoothFixup
 {
@@ -46,8 +47,10 @@ public:
 private:
     void processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t addres, size_t size);
     static IOReturn CreateBluetoothHostControllerObject(IOBluetoothHCIController * that, BluetoothHardwareListType * hardware);
+    static bool NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that); // return true without the board-id check
     
     mach_vm_address_t orgIOBluetoothFamily_CreateBluetoothHostControllerObject {0};
+    mach_vm_address_t orgIOBluetoothFamily_NeedToWaitForControllerToShowUp {0};
 };
 
 #endif /* kern_btfixup_hpp */

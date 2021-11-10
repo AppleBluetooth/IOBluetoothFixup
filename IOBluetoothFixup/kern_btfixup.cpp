@@ -42,10 +42,14 @@ void IOBluetoothFixup::processKext(KernelPatcher &patcher, size_t index, mach_vm
 {
     if ( index == kextList[0].loadIndex )
     {
-        KernelPatcher::RouteRequest request (createBluetoothHostControllerObjectSymbol, CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject);
-        if ( !patcher.routeMultiple(index, &request, 1, address, size) )
+        KernelPatcher::RouteRequest requests[]
         {
-            SYSLOG("IOBluetoothFixup", "patcher.routeMultiple for %s failed with error %d", request.symbol, patcher.getError());
+            KernelPatcher::RouteRequest(createBluetoothHostControllerObjectSymbol, CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject),
+            KernelPatcher::RouteRequest(needToWaitForControllerToShowUpSymbol, NeedToWaitForControllerToShowUp, orgIOBluetoothFamily_NeedToWaitForControllerToShowUp),
+        };
+        if ( !patcher.routeMultiple(index, requests, 2, address, size) )
+        {
+            //SYSLOG("IOBluetoothFixup", "patcher.routeMultiple for %s failed with error %d", request.symbol, patcher.getError());
             patcher.clearError();
         }
     }
@@ -102,4 +106,9 @@ IOReturn IOBluetoothFixup::CreateBluetoothHostControllerObject(IOBluetoothHCICon
     
     OSSafeReleaseNULL(controller);
     return -536870212;
+}
+
+bool IOBluetoothFixup::NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that)
+{
+    return true;
 }

@@ -50,8 +50,8 @@ PluginConfiguration ADDPR(config) {
     arrsize(bootargDebug),
     bootargBeta,
     arrsize(bootargBeta),
-    KernelVersion::Lion,
-    KernelVersion::Monterey,
+    KernelVersion::Catalina,
+    KernelVersion::BigSur,
     []() {
         btfixup.init();
     }
