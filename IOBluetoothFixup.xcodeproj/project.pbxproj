@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50851A6C273D401E0071A9DF /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50851A6B273D401E0071A9DF /* libkmod.a */; };
 		BCC6F35D27383BF700E62FDF /* kern_btfixup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCC6F35927383BF700E62FDF /* kern_btfixup.cpp */; };
 		BCC6F35E27383BF700E62FDF /* kern_start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCC6F35A27383BF700E62FDF /* kern_start.cpp */; };
 		BCC6F35F27383BF700E62FDF /* BluetoothHostControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = BCC6F35B27383BF700E62FDF /* BluetoothHostControllers.h */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50851A6B273D401E0071A9DF /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
 		BC0D3BE1273C2FD4009882E0 /* MacKernelSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MacKernelSDK; sourceTree = "<group>"; };
 		BCC6F33B2738372B00E62FDF /* IOBluetoothFixup.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOBluetoothFixup.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC6F3422738372B00E62FDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -32,12 +34,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50851A6C273D401E0071A9DF /* libkmod.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50851A6A273D401E0071A9DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50851A6B273D401E0071A9DF /* libkmod.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BCC6F3312738372B00E62FDF = {
 			isa = PBXGroup;
 			children = (
@@ -48,6 +59,7 @@
 				BCC6F36327383C2A00E62FDF /* README.md */,
 				BCC6F36727383C5000E62FDF /* .gitignore */,
 				BCC6F33C2738372B00E62FDF /* Products */,
+				50851A6A273D401E0071A9DF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,7 +188,6 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -218,7 +229,6 @@
 				MODULE_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -241,7 +251,6 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -285,21 +294,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IOBluetoothFixup/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/x86_64";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0;
 				MODULE_NAME = com.cjiang.IOBluetoothFixup;
 				MODULE_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cjiang.IOBluetoothFixup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				WRAPPER_EXTENSION = kext;
@@ -310,21 +317,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IOBluetoothFixup/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/x86_64";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0;
 				MODULE_NAME = com.cjiang.IOBluetoothFixup;
 				MODULE_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cjiang.IOBluetoothFixup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				WRAPPER_EXTENSION = kext;
