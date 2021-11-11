@@ -16,7 +16,6 @@
 
 /* Begin PBXFileReference section */
 		50851A6B273D401E0071A9DF /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
-		BC0D3BE1273C2FD4009882E0 /* MacKernelSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MacKernelSDK; sourceTree = "<group>"; };
 		BCC6F33B2738372B00E62FDF /* IOBluetoothFixup.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOBluetoothFixup.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC6F3422738372B00E62FDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCC6F35927383BF700E62FDF /* kern_btfixup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_btfixup.cpp; sourceTree = "<group>"; };
@@ -52,7 +51,6 @@
 		BCC6F3312738372B00E62FDF = {
 			isa = PBXGroup;
 			children = (
-				BC0D3BE1273C2FD4009882E0 /* MacKernelSDK */,
 				BCC6F36227383C2900E62FDF /* Lilu.kext */,
 				BCC6F33D2738372B00E62FDF /* IOBluetoothFixup */,
 				BCC6F36127383C2900E62FDF /* LICENSE */,
