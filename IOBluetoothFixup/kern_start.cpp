@@ -24,7 +24,7 @@
 
 #include "kern_btfixup.hpp"
 
-static IOBluetoothFixup btfixup;
+static IOBtFixup btfixup;
 
 const char *bootargOff[] {
     "-btfixupoff"
@@ -50,7 +50,7 @@ PluginConfiguration ADDPR(config) {
     arrsize(bootargDebug),
     bootargBeta,
     arrsize(bootargBeta),
-    KernelVersion::Catalina,
+    KernelVersion::HighSierra,
     KernelVersion::BigSur,
     []() {
         btfixup.init();

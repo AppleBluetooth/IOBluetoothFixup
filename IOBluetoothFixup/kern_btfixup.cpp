@@ -20,10 +20,11 @@
  */
 
 #include "kern_btfixup.hpp"
+#include <IOKit/bluetooth/transport/IOBluetoothHostControllerTransport.h>
 
-static IOBluetoothFixup * callback = nullptr;
+static IOBtFixup * callback = nullptr;
 
-void IOBluetoothFixup::init()
+void IOBtFixup::init()
 {
     callback = this;
     
@@ -33,29 +34,37 @@ void IOBluetoothFixup::init()
     }, this);
 }
 
-void IOBluetoothFixup::deinit()
+void IOBtFixup::deinit()
 {
     
 }
 
-void IOBluetoothFixup::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t address, size_t size)
+void IOBtFixup::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t address, size_t size)
 {
     if ( index == kextList[0].loadIndex )
+        orgIntelBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, itlBtMetaClassAllocSymbol);
+    else if ( index == kextList[1].loadIndex )
     {
+        orgIOBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, ioBtMetaClassAllocSymbol);
+        orgBrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, brcmBtMetaClassAllocSymbol);
+        orgABrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, aBrcmBtMetaClassAllocSymbol);
+        orgCSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, csrBtMetaClassAllocSymbol);
+        orgACSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, aCsrBtMetaClassAllocSymbol);
+
         KernelPatcher::RouteRequest requests[]
         {
             KernelPatcher::RouteRequest(createBluetoothHostControllerObjectSymbol, CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject),
             KernelPatcher::RouteRequest(needToWaitForControllerToShowUpSymbol, NeedToWaitForControllerToShowUp, orgIOBluetoothFamily_NeedToWaitForControllerToShowUp),
         };
-        if ( !patcher.routeMultiple(index, requests, 2, address, size) )
+        if ( !patcher.routeMultiple(index, requests, arrsize(requests), address, size) )
         {
-            //SYSLOG("IOBluetoothFixup", "patcher.routeMultiple for %s failed with error %d", request.symbol, patcher.getError());
+            SYSLOG("IOBtFixup", "patcher.routeMultiple failed with error %d", patcher.getError());
             patcher.clearError();
         }
     }
 }
 
-IOReturn IOBluetoothFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController * that, BluetoothHardwareListType * hardware)
+IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController * that, BluetoothHardwareListType * hardware)
 {
     IOBluetoothHostController * controller;
 
@@ -67,25 +76,22 @@ IOReturn IOBluetoothFixup::CreateBluetoothHostControllerObject(IOBluetoothHCICon
         case 2:
         case 6:
         case 7:
-            controller = OSTypeAlloc(AppleBroadcomBluetoothHostController);
+            controller = (AppleBroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgABrcmBluetoothHostController_metaClass_alloc)();
             break;
         case 3:
-            controller = OSTypeAlloc(AppleCSRBluetoothHostController);
+            controller = (AppleCSRBluetoothHostController *) ((metaClassAlloc) callback->orgACSRBluetoothHostController_metaClass_alloc)();
             break;
         case 4:
-            controller = OSTypeAlloc(BroadcomBluetoothHostController);
+            controller = (BroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgBrcmBluetoothHostController_metaClass_alloc)();
             break;
         case 5:
-            controller = OSTypeAlloc(CSRBluetoothHostController);
+            controller = (CSRBluetoothHostController *) ((metaClassAlloc) callback->orgCSRBluetoothHostController_metaClass_alloc)();
             break;
         case 8:
-            controller = OSTypeAlloc(IntelBluetoothHostController);
-            break;
-        case 9:
-            controller = OSTypeAlloc(Ath3KBluetoothHostController);
+            controller = (IntelBluetoothHostController *) ((metaClassAlloc) callback->orgIntelBluetoothHostController_metaClass_alloc)();
             break;
         default:
-            controller = OSTypeAlloc(IOBluetoothHostController);
+            controller = (IOBluetoothHostController *) ((metaClassAlloc) callback->orgIOBluetoothHostController_metaClass_alloc)();
             break;
     }
     
@@ -108,7 +114,7 @@ IOReturn IOBluetoothFixup::CreateBluetoothHostControllerObject(IOBluetoothHCICon
     return -536870212;
 }
 
-bool IOBluetoothFixup::NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that)
+bool IOBtFixup::NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that)
 {
     return true;
 }

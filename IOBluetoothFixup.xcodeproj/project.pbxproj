@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50851A6C273D401E0071A9DF /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50851A6B273D401E0071A9DF /* libkmod.a */; };
+		BCA7D0B327474A44007029F6 /* plugin_start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA7D0B227474A44007029F6 /* plugin_start.cpp */; };
 		BCC6F35D27383BF700E62FDF /* kern_btfixup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCC6F35927383BF700E62FDF /* kern_btfixup.cpp */; };
 		BCC6F35E27383BF700E62FDF /* kern_start.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCC6F35A27383BF700E62FDF /* kern_start.cpp */; };
 		BCC6F35F27383BF700E62FDF /* BluetoothHostControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = BCC6F35B27383BF700E62FDF /* BluetoothHostControllers.h */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		50851A6B273D401E0071A9DF /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
+		BCA7D0B227474A44007029F6 /* plugin_start.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = plugin_start.cpp; path = Lilu.kext/Contents/Resources/Library/plugin_start.cpp; sourceTree = "<group>"; };
 		BCC6F33B2738372B00E62FDF /* IOBluetoothFixup.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOBluetoothFixup.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC6F3422738372B00E62FDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCC6F35927383BF700E62FDF /* kern_btfixup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_btfixup.cpp; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 		BCC6F3312738372B00E62FDF = {
 			isa = PBXGroup;
 			children = (
+				BCA7D0B227474A44007029F6 /* plugin_start.cpp */,
 				BCC6F36227383C2900E62FDF /* Lilu.kext */,
 				BCC6F33D2738372B00E62FDF /* IOBluetoothFixup */,
 				BCC6F36127383C2900E62FDF /* LICENSE */,
@@ -162,6 +165,7 @@
 			files = (
 				BCC6F35E27383BF700E62FDF /* kern_start.cpp in Sources */,
 				BCC6F35D27383BF700E62FDF /* kern_btfixup.cpp in Sources */,
+				BCA7D0B327474A44007029F6 /* plugin_start.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
