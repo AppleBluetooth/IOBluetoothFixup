@@ -51,16 +51,25 @@ void IOBtFixup::processKext(KernelPatcher &patcher, size_t index, mach_vm_addres
         orgCSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, csrBtMetaClassAllocSymbol);
         orgACSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, aCsrBtMetaClassAllocSymbol);
 
-        KernelPatcher::RouteRequest requests[]
+		KernelPatcher::RouteRequest request1[]
+		{
+			KernelPatcher::RouteRequest(createBluetoothHostControllerObjectSymbol, CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject)
+		};
+        KernelPatcher::RouteRequest request2[]
         {
-            KernelPatcher::RouteRequest(createBluetoothHostControllerObjectSymbol, CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject),
-            KernelPatcher::RouteRequest(needToWaitForControllerToShowUpSymbol, NeedToWaitForControllerToShowUp, orgIOBluetoothFamily_NeedToWaitForControllerToShowUp),
+			KernelPatcher::RouteRequest(needToWaitForControllerToShowUpSymbol, NeedToWaitForControllerToShowUp, orgIOBluetoothFamily_NeedToWaitForControllerToShowUp)
         };
-        if ( !patcher.routeMultiple(index, requests, arrsize(requests), address, size) )
+
+		if ( !patcher.routeMultiple(index, request1, arrsize(request1), address, size) )
         {
+OVER:
             SYSLOG("IOBtFixup", "patcher.routeMultiple failed with error %d", patcher.getError());
             patcher.clearError();
+			return;
         }
+
+		if ( getKernelVersion() >= KernelVersion::BigSur && !patcher.routeMultiple(index, request2, arrsize(request2), address, size) )
+			goto OVER;
     }
 }
 
