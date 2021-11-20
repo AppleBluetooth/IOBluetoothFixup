@@ -30,7 +30,7 @@
 #include "BluetoothHostControllers.h"
 
 static const char *kextIOBluetoothFamily[] { "/System/Library/Extensions/IOBluetoothFamily.kext/Contents/MacOS/IOBluetoothFamily" };
-static const char *kextIntelBluetoothFamily[] { "/EFI/OC/Kexts/IntelBluetoothFamily.kext/Contents/MacOS/IntelBluetoothFamily" };
+static const char *kextIntelBluetoothFamily[] { "/Library/Extensions/IntelBluetoothFamily.kext/Contents/MacOS/IntelBluetoothFamily" };
 
 static KernelPatcher::KextInfo kextList[] {
     {"com.cjiang.IntelBluetoothFamily", kextIntelBluetoothFamily, arrsize(kextIntelBluetoothFamily), {true}, {}, KernelPatcher::KextInfo::Unloaded },

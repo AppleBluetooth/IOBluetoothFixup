@@ -98,6 +98,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
         case 5:
             controller = (CSRBluetoothHostController *) ((metaClassAlloc) callback->orgCSRBluetoothHostController_metaClass_alloc)();
             break;
+
         case 8:
             controller = (IntelBluetoothHostController *) ((metaClassAlloc) callback->orgItlBluetoothHostController_metaClass_alloc)();
             break;
@@ -105,7 +106,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
             controller = (IOBluetoothHostController *) ((metaClassAlloc) callback->orgIOBluetoothHostController_metaClass_alloc)();
             break;
     }
-    
+
     if ( !controller )
         return kIOReturnError;
     
