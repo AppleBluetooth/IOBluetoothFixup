@@ -40,7 +40,7 @@ static KernelPatcher::KextInfo kextList[] {
 static const char * createBluetoothHostControllerObjectSymbol { "__ZN24IOBluetoothHCIController35CreateBluetoothHostControllerObjectEP25BluetoothHardwareListType" }; //10.15-11.6
 static const char * needToWaitForControllerToShowUpSymbol { "__ZN24IOBluetoothHCIController31NeedToWaitForControllerToShowUpEv" }; //11.0-11.6
 
-typedef OSObject * (*metaClassAlloc)(void * that);
+typedef OSObject * (*metaClassAlloc)();
 
 class IOBtFixup
 {
