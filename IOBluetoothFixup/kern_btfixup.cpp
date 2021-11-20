@@ -42,14 +42,22 @@ void IOBtFixup::deinit()
 void IOBtFixup::processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t address, size_t size)
 {
     if ( index == kextList[0].loadIndex )
-        orgIntelBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, itlBtMetaClassAllocSymbol);
+	{
+		orgItlBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK28IntelBluetoothHostController9MetaClass5allocEv");
+		orgItlBluetoothHostController_gMetaClass = patcher.solveSymbol(index, "__ZN28IntelBluetoothHostController10gMetaClassE");
+	}
     else if ( index == kextList[1].loadIndex )
     {
-        orgIOBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, ioBtMetaClassAllocSymbol);
-        orgBrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, brcmBtMetaClassAllocSymbol);
-        orgABrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, aBrcmBtMetaClassAllocSymbol);
-        orgCSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, csrBtMetaClassAllocSymbol);
-        orgACSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, aCsrBtMetaClassAllocSymbol);
+        orgIOBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK25IOBluetoothHostController9MetaClass5allocEv");
+        orgBrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK31BroadcomBluetoothHostController9MetaClass5allocEv");
+        orgABrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK36AppleBroadcomBluetoothHostController9MetaClass5allocEv");
+        orgCSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK26CSRBluetoothHostController9MetaClass5allocEv");
+        orgACSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK31AppleCSRBluetoothHostController9MetaClass5allocEv");
+		orgIOBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZN25IOBluetoothHostController10gMetaClassE");
+		orgBrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZN31BroadcomBluetoothHostController10gMetaClassE");
+		orgABrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZN36AppleBroadcomBluetoothHostController10gMetaClassE");
+		orgCSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZN26CSRBluetoothHostController10gMetaClassE");
+		orgACSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZN31AppleCSRBluetoothHostController10gMetaClassE");
 
 		KernelPatcher::RouteRequest request1[]
 		{
@@ -79,28 +87,28 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
 
     if ( !hardware || !hardware->mBluetoothTransport )
         return kIOReturnError;
-  
-    switch ( *(UInt16 *) (hardware->mBluetoothTransport + 176) ) //mControllerVendorType
+
+    switch ( *(UInt16 *) ((UInt8 *) hardware->mBluetoothTransport + 176) ) //mControllerVendorType
     {
         case 2:
         case 6:
         case 7:
-            controller = (AppleBroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgABrcmBluetoothHostController_metaClass_alloc)();
+            controller = (AppleBroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgABrcmBluetoothHostController_metaClass_alloc)(reinterpret_cast<void *>(callback->orgABrcmBluetoothHostController_gMetaClass));
             break;
         case 3:
-            controller = (AppleCSRBluetoothHostController *) ((metaClassAlloc) callback->orgACSRBluetoothHostController_metaClass_alloc)();
+            controller = (AppleCSRBluetoothHostController *) ((metaClassAlloc) callback->orgACSRBluetoothHostController_metaClass_alloc)(reinterpret_cast<void *>(callback->orgACSRBluetoothHostController_gMetaClass));
             break;
         case 4:
-            controller = (BroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgBrcmBluetoothHostController_metaClass_alloc)();
+            controller = (BroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgBrcmBluetoothHostController_metaClass_alloc)(reinterpret_cast<void *>(callback->orgBrcmBluetoothHostController_gMetaClass));
             break;
         case 5:
-            controller = (CSRBluetoothHostController *) ((metaClassAlloc) callback->orgCSRBluetoothHostController_metaClass_alloc)();
+            controller = (CSRBluetoothHostController *) ((metaClassAlloc) callback->orgCSRBluetoothHostController_metaClass_alloc)(reinterpret_cast<void *>(callback->orgCSRBluetoothHostController_gMetaClass));
             break;
         case 8:
-            controller = (IntelBluetoothHostController *) ((metaClassAlloc) callback->orgIntelBluetoothHostController_metaClass_alloc)();
+            controller = (IntelBluetoothHostController *) ((metaClassAlloc) callback->orgItlBluetoothHostController_metaClass_alloc)(reinterpret_cast<void *>(callback->orgItlBluetoothHostController_gMetaClass));
             break;
         default:
-            controller = (IOBluetoothHostController *) ((metaClassAlloc) callback->orgIOBluetoothHostController_metaClass_alloc)();
+            controller = (IOBluetoothHostController *) ((metaClassAlloc) callback->orgIOBluetoothHostController_metaClass_alloc)(reinterpret_cast<void *>(callback->orgIOBluetoothHostController_gMetaClass));
             break;
     }
     
@@ -109,12 +117,12 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
     
     if ( controller->init(that, hardware->mBluetoothTransport) && controller->attach(that) )
     {
-        *(IOBluetoothHostControllerTransport **) (controller + 832) = hardware->mBluetoothTransport;
+		*(IOBluetoothHostControllerTransport **) ((UInt8 *) controller + 832) = hardware->mBluetoothTransport;
         if ( controller->start(that) )
         {
-            *(IOBluetoothHostController **) (hardware->mBluetoothTransport + 144) = controller;
+            *(IOBluetoothHostController **) ((UInt8 *) hardware->mBluetoothTransport + 144) = controller;
             hardware->mBluetoothHostController = controller;
-            return 0;
+            return kIOReturnSuccess;
         }
         controller->detach(that);
     }

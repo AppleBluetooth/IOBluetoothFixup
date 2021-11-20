@@ -40,14 +40,7 @@ static KernelPatcher::KextInfo kextList[] {
 static const char * createBluetoothHostControllerObjectSymbol { "__ZN24IOBluetoothHCIController35CreateBluetoothHostControllerObjectEP25BluetoothHardwareListType" }; //10.15-11.6
 static const char * needToWaitForControllerToShowUpSymbol { "__ZN24IOBluetoothHCIController31NeedToWaitForControllerToShowUpEv" }; //11.0-11.6
 
-static const char * ioBtMetaClassAllocSymbol    { "__ZNK25IOBluetoothHostController9MetaClass5allocEv" };
-static const char * brcmBtMetaClassAllocSymbol  { "__ZNK31BroadcomBluetoothHostController9MetaClass5allocEv" };
-static const char * aBrcmBtMetaClassAllocSymbol { "__ZNK36AppleBroadcomBluetoothHostController9MetaClass5allocEv" };
-static const char * csrBtMetaClassAllocSymbol   { "__ZNK26CSRBluetoothHostController9MetaClass5allocEv" };
-static const char * aCsrBtMetaClassAllocSymbol  { "__ZNK31AppleCSRBluetoothHostController9MetaClass5allocEv" };
-static const char * itlBtMetaClassAllocSymbol   { "__ZNK28IntelBluetoothHostController9MetaClass5allocEv" };
-
-typedef OSObject * (*metaClassAlloc)();
+typedef OSObject * (*metaClassAlloc)(void * that);
 
 class IOBtFixup
 {
@@ -62,12 +55,19 @@ private:
     
     mach_vm_address_t orgIOBluetoothFamily_CreateBluetoothHostControllerObject {0};
     mach_vm_address_t orgIOBluetoothFamily_NeedToWaitForControllerToShowUp {0};
+
     mach_vm_address_t orgIOBluetoothHostController_metaClass_alloc {0};
+	mach_vm_address_t orgIOBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgBrcmBluetoothHostController_metaClass_alloc {0};
+	mach_vm_address_t orgBrcmBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgABrcmBluetoothHostController_metaClass_alloc {0};
+	mach_vm_address_t orgABrcmBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgCSRBluetoothHostController_metaClass_alloc {0};
+	mach_vm_address_t orgCSRBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgACSRBluetoothHostController_metaClass_alloc {0};
-    mach_vm_address_t orgIntelBluetoothHostController_metaClass_alloc {0};
+	mach_vm_address_t orgACSRBluetoothHostController_gMetaClass {0};
+    mach_vm_address_t orgItlBluetoothHostController_metaClass_alloc {0};
+	mach_vm_address_t orgItlBluetoothHostController_gMetaClass {0};
 };
 
 #endif /* kern_btfixup_hpp */
