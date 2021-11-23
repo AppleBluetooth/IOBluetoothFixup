@@ -89,12 +89,15 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
         case 7:
             controller = (AppleBroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgABrcmBluetoothHostController_metaClass_alloc)();
             break;
+
         case 3:
             controller = (AppleCSRBluetoothHostController *) ((metaClassAlloc) callback->orgACSRBluetoothHostController_metaClass_alloc)();
             break;
+
         case 4:
             controller = (BroadcomBluetoothHostController *) ((metaClassAlloc) callback->orgBrcmBluetoothHostController_metaClass_alloc)();
             break;
+
         case 5:
             controller = (CSRBluetoothHostController *) ((metaClassAlloc) callback->orgCSRBluetoothHostController_metaClass_alloc)();
             break;
@@ -102,6 +105,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
         case 8:
             controller = (IntelBluetoothHostController *) ((metaClassAlloc) callback->orgItlBluetoothHostController_metaClass_alloc)();
             break;
+
         default:
             controller = (IOBluetoothHostController *) ((metaClassAlloc) callback->orgIOBluetoothHostController_metaClass_alloc)();
             break;
@@ -109,7 +113,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
 
     if ( !controller )
         return kIOReturnError;
-    
+
     if ( controller->init(that, hardware->mBluetoothTransport) && controller->attach(that) )
     {
 		*(IOBluetoothHostControllerTransport **) ((UInt8 *) controller + 832) = hardware->mBluetoothTransport;
@@ -121,7 +125,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
         }
         controller->detach(that);
     }
-    
+
     OSSafeReleaseNULL(controller);
     return kIOReturnError;
 }
