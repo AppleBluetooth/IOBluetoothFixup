@@ -82,7 +82,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
     if ( !hardware || !hardware->mBluetoothTransport )
         return kIOReturnError;
 
-    switch ( *(UInt16 *) ((UInt8 *) hardware->mBluetoothTransport + 176) ) //mControllerVendorType
+    switch ( hardware->mBluetoothTransport->mControllerVendorType )
     {
         case 2:
         case 6:
@@ -116,10 +116,10 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
 
     if ( controller->init(that, hardware->mBluetoothTransport) && controller->attach(that) )
     {
-		*(IOBluetoothHostControllerTransport **) ((UInt8 *) controller + 832) = hardware->mBluetoothTransport;
+		controller->mBluetoothTransport = hardware->mBluetoothTransport;
         if ( controller->start(that) )
         {
-            *(IOBluetoothHostController **) ((UInt8 *) hardware->mBluetoothTransport + 144) = controller;
+            hardware->mBluetoothTransport->mBluetoothController = controller;
             hardware->mBluetoothHostController = controller;
             return kIOReturnSuccess;
         }
