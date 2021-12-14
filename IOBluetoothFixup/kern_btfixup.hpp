@@ -52,7 +52,7 @@ private:
     void processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t addres, size_t size);
     static IOReturn CreateBluetoothHostControllerObject(IOBluetoothHCIController * that, BluetoothHardwareListType * hardware);
     static bool NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that); // return true without the board-id check
-    
+
     mach_vm_address_t orgIOBluetoothFamily_CreateBluetoothHostControllerObject {0};
     mach_vm_address_t orgIOBluetoothFamily_NeedToWaitForControllerToShowUp {0};
 

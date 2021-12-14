@@ -116,7 +116,7 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
 
     if ( controller->init(that, hardware->mBluetoothTransport) && controller->attach(that) )
     {
-		controller->mBluetoothTransport = hardware->mBluetoothTransport;
+        controller->mBluetoothTransport = hardware->mBluetoothTransport;
         if ( controller->start(that) )
         {
             hardware->mBluetoothTransport->mBluetoothController = controller;
