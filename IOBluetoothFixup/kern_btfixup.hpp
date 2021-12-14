@@ -57,17 +57,11 @@ private:
     mach_vm_address_t orgIOBluetoothFamily_NeedToWaitForControllerToShowUp {0};
 
     mach_vm_address_t orgIOBluetoothHostController_metaClass_alloc {0};
-	mach_vm_address_t orgIOBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgBrcmBluetoothHostController_metaClass_alloc {0};
-	mach_vm_address_t orgBrcmBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgABrcmBluetoothHostController_metaClass_alloc {0};
-	mach_vm_address_t orgABrcmBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgCSRBluetoothHostController_metaClass_alloc {0};
-	mach_vm_address_t orgCSRBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgACSRBluetoothHostController_metaClass_alloc {0};
-	mach_vm_address_t orgACSRBluetoothHostController_gMetaClass {0};
     mach_vm_address_t orgItlBluetoothHostController_metaClass_alloc {0};
-	mach_vm_address_t orgItlBluetoothHostController_gMetaClass {0};
 };
 
 #endif /* kern_btfixup_hpp */

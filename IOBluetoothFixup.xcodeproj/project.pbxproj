@@ -17,13 +17,13 @@
 
 /* Begin PBXFileReference section */
 		50851A6B273D401E0071A9DF /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = MacKernelSDK/Library/x86_64/libkmod.a; sourceTree = "<group>"; };
-		BCA7D0B227474A44007029F6 /* plugin_start.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = plugin_start.cpp; path = Lilu.kext/Contents/Resources/Library/plugin_start.cpp; sourceTree = "<group>"; };
+		BCA7D0B227474A44007029F6 /* plugin_start.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = plugin_start.cpp; path = Lilu.kext/Contents/Resources/Library/plugin_start.cpp; sourceTree = "<group>"; usesTabs = 1; };
 		BCC6F33B2738372B00E62FDF /* IOBluetoothFixup.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOBluetoothFixup.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCC6F3422738372B00E62FDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BCC6F35927383BF700E62FDF /* kern_btfixup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_btfixup.cpp; sourceTree = "<group>"; };
-		BCC6F35A27383BF700E62FDF /* kern_start.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_start.cpp; sourceTree = "<group>"; };
-		BCC6F35B27383BF700E62FDF /* BluetoothHostControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothHostControllers.h; sourceTree = "<group>"; usesTabs = 1; };
-		BCC6F35C27383BF700E62FDF /* kern_btfixup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = kern_btfixup.hpp; sourceTree = "<group>"; };
+		BCC6F35927383BF700E62FDF /* kern_btfixup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_btfixup.cpp; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
+		BCC6F35A27383BF700E62FDF /* kern_start.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kern_start.cpp; sourceTree = "<group>"; usesTabs = 0; };
+		BCC6F35B27383BF700E62FDF /* BluetoothHostControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothHostControllers.h; sourceTree = "<group>"; usesTabs = 0; };
+		BCC6F35C27383BF700E62FDF /* kern_btfixup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = kern_btfixup.hpp; sourceTree = "<group>"; usesTabs = 0; };
 		BCC6F36127383C2900E62FDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BCC6F36327383C2A00E62FDF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BCC6F36727383C5000E62FDF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
