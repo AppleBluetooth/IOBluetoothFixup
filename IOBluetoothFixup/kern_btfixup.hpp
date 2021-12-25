@@ -33,8 +33,8 @@ static const char *kextIOBluetoothFamily[] { "/System/Library/Extensions/IOBluet
 static const char *kextIntelBluetoothFamily[] { "/Library/Extensions/IntelBluetoothFamily.kext/Contents/MacOS/IntelBluetoothFamily" };
 
 static KernelPatcher::KextInfo kextList[] {
-    {"com.cjiang.IntelBluetoothFamily", kextIntelBluetoothFamily, arrsize(kextIntelBluetoothFamily), {true}, {}, KernelPatcher::KextInfo::Unloaded },
-    {"com.apple.iokit.IOBluetoothFamily", kextIOBluetoothFamily, arrsize(kextIOBluetoothFamily), {true}, {}, KernelPatcher::KextInfo::Unloaded }
+    {"com.apple.iokit.IOBluetoothFamily", kextIOBluetoothFamily, arrsize(kextIOBluetoothFamily), {true}, {}, KernelPatcher::KextInfo::Unloaded },
+    {"com.cjiang.IntelBluetoothFamily", kextIntelBluetoothFamily, arrsize(kextIntelBluetoothFamily), {true}, {}, KernelPatcher::KextInfo::Unloaded }
 };
 
 static const char * createBluetoothHostControllerObjectSymbol { "__ZN24IOBluetoothHCIController35CreateBluetoothHostControllerObjectEP25BluetoothHardwareListType" }; //10.15-11.6
@@ -62,6 +62,9 @@ private:
     mach_vm_address_t orgCSRBluetoothHostController_metaClass_alloc {0};
     mach_vm_address_t orgACSRBluetoothHostController_metaClass_alloc {0};
     mach_vm_address_t orgItlBluetoothHostController_metaClass_alloc {0};
+    
+    mach_vm_address_t mIOBluetoothFamilyAddress;
+    size_t            mIOBluetoothFamilySize;
 };
 
 #endif /* kern_btfixup_hpp */
