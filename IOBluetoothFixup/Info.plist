@@ -25,9 +25,9 @@
 			<key>CFBundleIdentifier</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>IOClass</key>
-			<string>IOBluetoothFixup</string>
-			<key>IOClassCategory</key>
-			<string>IOBluetoothFixup</string>
+			<string>$(PRODUCT_NAME:rfc1034identifier)</string>
+			<key>IOMatchCategory</key>
+			<string>$(PRODUCT_NAME:rfc1034identifier)</string>
 			<key>IOProviderClass</key>
 			<string>IOResources</string>
 			<key>IOResourceMatch</key>
@@ -37,19 +37,17 @@
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>as.vit9696.Lilu</key>
-		<string>1.5.6</string>
-        <key>com.apple.kpi.bsd</key>
-        <string>9.0.0</string>
-        <key>com.apple.kpi.dsep</key>
-        <string>9.0.0</string>
-        <key>com.apple.kpi.iokit</key>
-        <string>9.0.0</string>
-        <key>com.apple.kpi.libkern</key>
-        <string>9.0.0</string>
-        <key>com.apple.kpi.mach</key>
-        <string>9.0.0</string>
-        <key>com.apple.kpi.unsupported</key>
-        <string>9.0.0</string>
+		<string>1.2.0</string>
+		<key>com.apple.kpi.bsd</key>
+		<string>8.0.0</string>
+		<key>com.apple.kpi.iokit</key>
+		<string>8.0.0</string>
+		<key>com.apple.kpi.libkern</key>
+		<string>8.0.0</string>
+		<key>com.apple.kpi.mach</key>
+		<string>8.0.0</string>
+		<key>com.apple.kpi.unsupported</key>
+		<string>8.0.0</string>
 	</dict>
 	<key>OSBundleRequired</key>
 	<string>Root</string>
