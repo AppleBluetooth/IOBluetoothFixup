@@ -37,10 +37,8 @@ static KernelPatcher::KextInfo kextList[] {
     {"com.cjiang.IntelBluetoothFamily", kextIntelBluetoothFamily, arrsize(kextIntelBluetoothFamily), {true}, {}, KernelPatcher::KextInfo::Unloaded }
 };
 
-static const char * createBluetoothHostControllerObjectSymbol { "__ZN24IOBluetoothHCIController35CreateBluetoothHostControllerObjectEP25BluetoothHardwareListType" }; //10.15-11.6
-static const char * needToWaitForControllerToShowUpSymbol { "__ZN24IOBluetoothHCIController31NeedToWaitForControllerToShowUpEv" }; //11.0-11.6
-
 typedef OSObject * (*metaClassAlloc)();
+typedef IOReturn (*parseHCICommand)(UInt16 ocf, UInt8 * inData, UInt32 inDataSize, UInt8 * outData, UInt32 * outDataSize, UInt8 * outStatus);
 
 class IOBtFixup
 {
@@ -52,9 +50,12 @@ private:
     void processKext(KernelPatcher &patcher, size_t index, mach_vm_address_t addres, size_t size);
     static IOReturn CreateBluetoothHostControllerObject(IOBluetoothHCIController * that, BluetoothHardwareListType * hardware);
     static bool NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that); // return true without the board-id check
+    static IOReturn WrapParseVendorSpecificCommand(UInt16 ocf, UInt8 * inData, UInt32 inDataSize, UInt8 * outData, UInt32 * outDataSize, UInt8 * outStatus);
 
     mach_vm_address_t orgIOBluetoothFamily_CreateBluetoothHostControllerObject {0};
     mach_vm_address_t orgIOBluetoothFamily_NeedToWaitForControllerToShowUp {0};
+    mach_vm_address_t orgParseVendorSpecificCommand {0};
+    mach_vm_address_t orgParseIntelVendorSpecificCommand {0};
 
     mach_vm_address_t orgIOBluetoothHostController_metaClass_alloc {0};
     mach_vm_address_t orgBrcmBluetoothHostController_metaClass_alloc {0};

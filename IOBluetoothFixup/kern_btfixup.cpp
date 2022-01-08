@@ -50,13 +50,23 @@ void IOBtFixup::processKext(KernelPatcher &patcher, size_t index, mach_vm_addres
         orgABrcmBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK36AppleBroadcomBluetoothHostController9MetaClass5allocEv");
         orgCSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK26CSRBluetoothHostController9MetaClass5allocEv");
         orgACSRBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK31AppleCSRBluetoothHostController9MetaClass5allocEv");
+        
+        KernelPatcher::RouteRequest parseVendorSpecificCommandRequest("_ParseVendorSpecificCommand", WrapParseVendorSpecificCommand, orgParseVendorSpecificCommand);
+        
+        if ( !patcher.routeMultiple(kextList[0].loadIndex, &parseVendorSpecificCommandRequest, 1, address, size) )
+        {
+            SYSLOG("IOBtFixup", "patcher.routeMultiple failed with error %d", patcher.getError());
+            patcher.clearError();
+            return;
+        }
     }
     else if ( index == kextList[1].loadIndex )
     {
+        orgParseIntelVendorSpecificCommand = patcher.solveSymbol(index, "_ParseIntelVendorSpecificCommand");
         orgItlBluetoothHostController_metaClass_alloc = patcher.solveSymbol(index, "__ZNK28IntelBluetoothHostController9MetaClass5allocEv");
 
-        KernelPatcher::RouteRequest createHostControllerObjectRequest(createBluetoothHostControllerObjectSymbol, CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject);
-        KernelPatcher::RouteRequest needToWaitForControllerToShowUpRequest(needToWaitForControllerToShowUpSymbol, NeedToWaitForControllerToShowUp, orgIOBluetoothFamily_NeedToWaitForControllerToShowUp);
+        KernelPatcher::RouteRequest createHostControllerObjectRequest("__ZN24IOBluetoothHCIController35CreateBluetoothHostControllerObjectEP25BluetoothHardwareListType", CreateBluetoothHostControllerObject, orgIOBluetoothFamily_CreateBluetoothHostControllerObject);
+        KernelPatcher::RouteRequest needToWaitForControllerToShowUpRequest("__ZN24IOBluetoothHCIController31NeedToWaitForControllerToShowUpEv", NeedToWaitForControllerToShowUp, orgIOBluetoothFamily_NeedToWaitForControllerToShowUp);
 
         if ( !patcher.routeMultiple(kextList[0].loadIndex, &createHostControllerObjectRequest, 1, mIOBluetoothFamilyAddress, mIOBluetoothFamilySize)
           || (getKernelVersion() >= KernelVersion::BigSur && !patcher.routeMultiple(kextList[0].loadIndex, &needToWaitForControllerToShowUpRequest, 1, mIOBluetoothFamilyAddress, mIOBluetoothFamilySize))  )
@@ -126,4 +136,9 @@ IOReturn IOBtFixup::CreateBluetoothHostControllerObject(IOBluetoothHCIController
 bool IOBtFixup::NeedToWaitForControllerToShowUp(IOBluetoothHCIController * that)
 {
     return true;
+}
+
+IOReturn IOBtFixup::WrapParseVendorSpecificCommand(UInt16 ocf, UInt8 *inData, UInt32 inDataSize, UInt8 * outData, UInt32 * outDataSize, UInt8 * outStatus)
+{
+    return (IOReturn) ((parseHCICommand) callback->orgParseIntelVendorSpecificCommand)(ocf, inData, inDataSize, outData, outDataSize, outStatus);
 }
